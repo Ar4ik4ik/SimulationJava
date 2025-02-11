@@ -3,11 +3,29 @@ import Utils.Coordinates;
 
 
 public abstract class Entity {
-    protected Coordinates entityCoords;
+    private Coordinates entityCoords;
 
-    protected Entity(Coordinates entityCoords) {
-        this.entityCoords = entityCoords;
+    protected Entity(Coordinates initCoords) {
+        this.entityCoords = initCoords;
     }
 
     abstract public String toString();
+
+    public int getX() {
+        return entityCoords.getX();
+    }
+
+    public int getY() {
+        return entityCoords.getY();
+    }
+
+    protected void setEntityCoords(Coordinates newEntityCoords) {
+        this.entityCoords = newEntityCoords;
+    }
+
+    public Coordinates getEntityCoords() {
+        return entityCoords;
+    }
+
+
 }
