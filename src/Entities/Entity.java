@@ -12,11 +12,11 @@ public abstract class Entity {
     abstract public String toString();
 
     public int getX() {
-        return entityCoords.getX();
+        return entityCoords.x();
     }
 
     public int getY() {
-        return entityCoords.getY();
+        return entityCoords.y();
     }
 
     protected void setEntityCoords(Coordinates newEntityCoords) {
