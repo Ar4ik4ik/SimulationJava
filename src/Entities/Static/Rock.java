@@ -6,7 +6,7 @@ import Utils.Coordinates;
 
 public class Rock extends Entity {
 
-    Rock (Coordinates entityCoords) {
+    public Rock(Coordinates entityCoords) {
         super(entityCoords);
     }
 

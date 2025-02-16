@@ -6,6 +6,8 @@ import Utils.Coordinates;
 
 public class Grass extends Entity {
 
+    int healthPoints = 4;
+
     Grass (Coordinates entityCoords) {
         super(entityCoords);
     }

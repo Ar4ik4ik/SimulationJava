@@ -3,20 +3,20 @@ package Entities.Dynamic;
 import Entities.Entity;
 import Utils.Coordinates;
 
-import java.util.Optional;
+public abstract class Creature<T extends Entity> extends Entity {
 
-public abstract class Creature extends Entity {
-
-    public final Entity food;
+    // think about loading from cfg file
     int healthPoints = 100;
     int hunger = 200;
     int moveSpeed;
-    boolean isAlive = true;
+
+    boolean isAlive = true; // think about observer pattern
 
     // makeMove
     public void makeMove() {
         if (this.healthPoints <= 50) {
-            Entity foodObj = searchFood();
+            // think about return type & method parameter type (smthing like interface)
+            T foodObj = searchFood();
             if (foodObj != null) {
                 // create path
                 // if creature near food -> interactWithFood
@@ -27,10 +27,9 @@ public abstract class Creature extends Entity {
             toHungry();
         }
     }
-
-    protected Creature(Coordinates entityCoords, Entity food) {
+    // think about method parameter type (smthing like interface)
+    protected Creature(Coordinates entityCoords) {
         super(entityCoords);
-        this.food = food;
     }
 
     protected void setHungerValue(int value) {
@@ -67,9 +66,11 @@ public abstract class Creature extends Entity {
         setHungerValue(-10);
     }
 
-    public abstract Entity searchFood();
 
-    protected abstract void interactWithFood();
+    // think about return type & method parameter type (smthing like interface)
+    public abstract T searchFood();
+
+    protected abstract void interactWithFood(T prey);
 
 
 }

@@ -1,8 +1,7 @@
 package Entities;
 
-import Entities.Dynamic.Creature;
+import Entities.Static.Grass;
 import Utils.Coordinates;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +9,8 @@ public class WorldMap {
     protected final int WIDTH; // x coordinate
     protected final int HEIGHT; // y coordinate
 
-    private final Map<Coordinates, Creature> entityWithCoords = new HashMap<>();
+    // think about replace Creature to key value for fast coords replacing
+    private final Map<Coordinates, Entity> worldMap = new HashMap<>();
 
 
     public WorldMap(int width, int height) {
@@ -18,34 +18,59 @@ public class WorldMap {
         HEIGHT = height;
     }
 
-    private boolean isWithinBorders(Coordinates coords) {
+    public boolean isWithinBorders(Coordinates coords) {
         // Negative check in Coordinates.java (x & y can't be like -1)
         return coords.x() <= WIDTH && coords.y() <= HEIGHT;
     }
 
-    private void replaceCoords(Creature creature, Coordinates newCreatureCoords) {
-        entityWithCoords.remove(creature.getEntityCoords());
-        entityWithCoords.put(newCreatureCoords, creature);
+    private void replaceCoords(Entity entity, Coordinates newEntityCoords) {
+        if (isWithinBorders(newEntityCoords)) entity.setEntityCoords(newEntityCoords);
     }
 
-    private boolean placeOnMap(Creature creature) {
-        if (isEmpty(creature.getEntityCoords())) {
-            entityWithCoords.put(creature.getEntityCoords(), creature);
+    public boolean placeOnMap(Entity entity) {
+        if (isEmpty(entity.getEntityCoords())) {
+            worldMap.put(entity.getEntityCoords(), entity);
             return true;
         }
         return false;
     }
 
-    public boolean moveCreature(Creature creature, Coordinates newCreatureCoords) {
-        if (isWithinBorders(newCreatureCoords) && isEmpty(newCreatureCoords)) {
-            creature.setEntityCoords(newCreatureCoords);
-            replaceCoords(creature, newCreatureCoords);
+    protected void deleteFromMap(Entity entity) {
+        worldMap.remove(entity.getEntityCoords());
+    }
+
+    public boolean moveEntity(Entity entity, Coordinates newEntityCoords) {
+        if (isWithinBorders(newEntityCoords) && isEmpty(newEntityCoords)) {
+            replaceCoords(entity, newEntityCoords);
             return true;
         }
         return false;
     }
 
     public boolean isEmpty(Coordinates coords) {
-        return !entityWithCoords.containsKey(coords);
+        return worldMap.containsKey(coords);
+    }
+
+    public <T extends Entity> Map<Coordinates, T> collectTargetEntity(Class<T> entityType) {
+        Map<Coordinates, T> outputMap = new HashMap<>();
+        for (Map.Entry<Coordinates, Entity> entry: this.worldMap.entrySet()) {
+            if (entityType.isInstance(entry.getValue())) {
+                outputMap.put(entry.getKey(), entityType.cast(entry.getValue()));
+            }
+        }
+        return outputMap;
+    }
+
+    public Entity getEntityByCoords(Coordinates coords) {
+        return worldMap.get(coords);
+    }
+
+
+//    public <T extends Entity> Entity findNearestEntity(Coordinates seekerCoordinates, Class<T> target) {
+//        return PathFinder.findNearestEntity(seekerCoordinates, target, (WorldMap) this.worldMap);
+//    }
+
+    public boolean isWalkableObj(Coordinates objCoords) {
+        return worldMap.get(objCoords) instanceof Grass;
     }
 }
