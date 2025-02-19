@@ -1,25 +1,18 @@
 package Utils;
 
 import Entities.Entity;
-import Entities.Static.Rock;
 import Entities.WorldMap;
 
 import java.util.*;
 
 public class PathFinder {
 
-    WorldMap mapInstance;
-
-    PathFinder(WorldMap mapInstance) {
-        this.mapInstance = mapInstance;
-    }
-
     private static double heuristicDistance(Coordinates start, Coordinates target) {
         return Math.sqrt(Math.pow(start.x() - target.x(), 2) + Math.pow(start.y() - target.y(), 2));
     }
 
 
-    public <T extends Entity> T findNearestEntity(Coordinates seekerCoordinates, Class<T> target) {
+    public static <T extends Entity> T findNearestEntity(Coordinates seekerCoordinates, Class<T> target, WorldMap mapInstance) {
 
         Queue<Node> openSet = new PriorityQueue<>();
         Set<Coordinates> closedSet = new HashSet<>();
@@ -37,7 +30,7 @@ public class PathFinder {
                 return target.cast(entity);
             }
 
-            for (Map.Entry<Coordinates, Integer> entry: getNeighbors(polledNode.position).entrySet()) {
+            for (Map.Entry<Coordinates, Integer> entry: getNeighbors(polledNode.position, mapInstance).entrySet()) {
                 Coordinates neighbor = entry.getKey();
                 int moveCost = entry.getValue();
 
@@ -49,7 +42,7 @@ public class PathFinder {
         return null;
     }
 
-    public List<Coordinates> createPath(Coordinates startPosition, Coordinates targetPosition) {
+    public static List<Coordinates> createPath(Coordinates startPosition, Coordinates targetPosition, WorldMap mapInstance) {
         Queue<Node> openSet = new PriorityQueue<>();
         Set<Coordinates> closedSet = new HashSet<>();
         openSet.add(new Node(startPosition, null, 0, heuristicDistance(startPosition, targetPosition)));
@@ -60,7 +53,7 @@ public class PathFinder {
             if (polledNode.position.equals(targetPosition)) return reconstructPath(polledNode);
             closedSet.add(polledNode.position);
 
-            for (Map.Entry<Coordinates, Integer> entry: getNeighbors(polledNode.position).entrySet()) {
+            for (Map.Entry<Coordinates, Integer> entry: getNeighbors(polledNode.position, mapInstance).entrySet()) {
                 Coordinates neighborPosition = entry.getKey();
                 int moveCost = entry.getValue();
 
@@ -89,10 +82,10 @@ public class PathFinder {
         return new ArrayList<>();
     }
 
-    private Map<Coordinates, Integer> getNeighbors(Coordinates coords) {
+    public static Map<Coordinates, Integer> getNeighbors(Coordinates coords, WorldMap mapInstance) {
         int x = coords.x();
         int y = coords.y();
-        int[][] DIRECTIONS = new int[][]{{x - 1, y}, {x, y - 1}, {x + 1, y}, {x + 1, y},
+        int[][] DIRECTIONS = new int[][]{{x - 1, y}, {x, y - 1}, {x + 1, y}, {x, y + 1},
                 {x - 1, y - 1}, {x + 1, y - 1}, {x - 1, y + 1}, {x + 1, y + 1}};
         Map<Coordinates, Integer> validNeighbors = new HashMap<>();
 
@@ -115,7 +108,7 @@ public class PathFinder {
         return validNeighbors;
     }
 
-    private List<Coordinates> reconstructPath(Node node) {
+    private static List<Coordinates> reconstructPath(Node node) {
         List<Coordinates> Path = new ArrayList<>();
 
         while (node != null) {

@@ -2,6 +2,8 @@ package Entities;
 
 import Entities.Static.Grass;
 import Utils.Coordinates;
+import Utils.PathFinder;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +13,6 @@ public class WorldMap {
 
     // think about replace Creature to key value for fast coords replacing
     private final Map<Coordinates, Entity> worldMap = new HashMap<>();
-
 
     public WorldMap(int width, int height) {
         WIDTH = width;
@@ -35,7 +36,7 @@ public class WorldMap {
         return false;
     }
 
-    protected void deleteFromMap(Entity entity) {
+    public void deleteFromMap(Entity entity) {
         worldMap.remove(entity.getEntityCoords());
     }
 
@@ -66,9 +67,9 @@ public class WorldMap {
     }
 
 
-//    public <T extends Entity> Entity findNearestEntity(Coordinates seekerCoordinates, Class<T> target) {
-//        return PathFinder.findNearestEntity(seekerCoordinates, target, (WorldMap) this.worldMap);
-//    }
+    public <T extends Entity> T findNearestEntity(Coordinates seekerCoordinates, Class<T> target) {
+        return PathFinder.findNearestEntity(seekerCoordinates, target, this);
+    }
 
     public boolean isWalkableObj(Coordinates objCoords) {
         return worldMap.get(objCoords) instanceof Grass;
