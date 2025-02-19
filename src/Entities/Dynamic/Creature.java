@@ -3,7 +3,9 @@ package Entities.Dynamic;
 import Entities.Entity;
 import Utils.Coordinates;
 
-public abstract class Creature<T extends Entity> extends Entity {
+import static Utils.PathFinder.getNeighbors;
+
+public abstract class Creature<T extends Entity> extends Entity implements DynamicalHealth {
 
     // think about loading from cfg file
     int healthPoints = 100;
