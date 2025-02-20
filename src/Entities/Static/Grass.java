@@ -6,12 +6,14 @@ import Entities.Entity;
 import Utils.Coordinates;
 
 public class Grass extends Entity implements DynamicalHealth {
-
-    int healthPoints = 4;
+    int maxHealthPoints;
+    int currentHealthPoints;
     boolean isAlive = true;
 
-    Grass (Coordinates entityCoords) {
+    public Grass(Coordinates entityCoords, int maxHealthPoints) {
         super(entityCoords);
+        this.maxHealthPoints = maxHealthPoints;
+        this.currentHealthPoints = maxHealthPoints;
     }
 
     @Override
@@ -20,13 +22,13 @@ public class Grass extends Entity implements DynamicalHealth {
     }
 
     @Override
-    public void setHealthPoints(int value) {
-        if (healthPoints + value <= 0) {
+    public void setCurrentHealthPoints(int value) {
+        if (currentHealthPoints + value <= 0) {
             isAlive = false;
-        } else if (healthPoints + value >= 100) {
-            healthPoints = 100;
+        } else if (currentHealthPoints + value >= maxHealthPoints) {
+            currentHealthPoints = maxHealthPoints;
         } else {
-            healthPoints += value;
+            currentHealthPoints += value;
         }
     }
 

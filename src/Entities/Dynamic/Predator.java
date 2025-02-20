@@ -1,14 +1,16 @@
 package Entities.Dynamic;
 
 import Entities.EntitiesRepresentation;
-import Entities.Entity;
 import Entities.WorldMap;
 import Utils.Coordinates;
 
 public class Predator extends Creature<Herbivore> {
 
-    public Predator(Coordinates entityCoords, int moveSpeed, WorldMap mapInstance) {
-        super(entityCoords, mapInstance, Herbivore.class);
+    public Predator(Coordinates entityCoords, WorldMap mapInstance,
+                    int moveSpeed,
+                    int maxHealthPoints,
+                    int maxHungry) {
+        super(entityCoords, mapInstance, Herbivore.class, moveSpeed, maxHealthPoints, maxHungry);
         this.moveSpeed = moveSpeed;
     }
 
@@ -18,10 +20,9 @@ public class Predator extends Creature<Herbivore> {
 
     @Override
     protected void interactWithFood(Herbivore prey) {
-        prey.setHealthPoints(-25);
+        prey.setCurrentHealthPoints(-25);
         if (!prey.isAlive()) {
-            this.setHungerValue(100);
-            mapInstance.deleteFromMap(prey);
+            this.setHungryValue(100);
         }
     }
 

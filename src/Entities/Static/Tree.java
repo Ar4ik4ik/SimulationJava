@@ -6,7 +6,7 @@ import Utils.Coordinates;
 
 public class Tree extends Entity {
 
-    Tree (Coordinates entityCoords) {
+    public Tree(Coordinates entityCoords) {
         super(entityCoords);
     }
 

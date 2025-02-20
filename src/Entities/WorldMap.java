@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WorldMap {
-    protected final int WIDTH; // x coordinate
-    protected final int HEIGHT; // y coordinate
+    public final int WIDTH; // x coordinate
+    public final int HEIGHT; // y coordinate
 
     // think about replace Creature to key value for fast coords replacing
     private final Map<Coordinates, Entity> worldMap = new HashMap<>();
@@ -28,12 +28,10 @@ public class WorldMap {
         if (isWithinBorders(newEntityCoords)) entity.setEntityCoords(newEntityCoords);
     }
 
-    public boolean placeOnMap(Entity entity) {
+    public void placeOnMap(Entity entity) {
         if (isEmpty(entity.getEntityCoords())) {
             worldMap.put(entity.getEntityCoords(), entity);
-            return true;
         }
-        return false;
     }
 
     public void deleteFromMap(Entity entity) {
@@ -49,7 +47,7 @@ public class WorldMap {
     }
 
     public boolean isEmpty(Coordinates coords) {
-        return worldMap.containsKey(coords);
+        return !worldMap.containsKey(coords);
     }
 
     public <T extends Entity> Map<Coordinates, T> collectTargetEntity(Class<T> entityType) {
@@ -66,6 +64,9 @@ public class WorldMap {
         return worldMap.get(coords);
     }
 
+    public Map<Coordinates, Entity> getWorldMap() {
+        return new HashMap<>(worldMap);
+    }
 
     public <T extends Entity> T findNearestEntity(Coordinates seekerCoordinates, Class<T> target) {
         return PathFinder.findNearestEntity(seekerCoordinates, target, this);

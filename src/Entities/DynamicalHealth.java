@@ -1,6 +1,6 @@
 package Entities;
 
 public interface DynamicalHealth {
-    void setHealthPoints(int value);
+    void setCurrentHealthPoints(int value);
     boolean isAlive();
 }

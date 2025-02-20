@@ -15,8 +15,11 @@ import static Utils.PathFinder.getNeighbors;
 public abstract class Creature<T extends Entity> extends Entity implements DynamicalHealth {
 
     // think about loading from cfg file
-    int healthPoints = 100;
-    int hunger = 200;
+    int maxHungry;
+    int maxHealthPoints;
+
+    int currentHealthPoints;
+    int currentHungry;
     int moveSpeed;
     final WorldMap mapInstance;
     Class<T> food;
@@ -25,7 +28,7 @@ public abstract class Creature<T extends Entity> extends Entity implements Dynam
 
     // makeMove
     public void makeMove() {
-        if (this.hunger <= 50) {
+        if (this.currentHungry <= 50) {
             // think about return type & method parameter type (smthing like interface)
             T foodObj = searchFood();
             if (foodObj != null) {
@@ -46,10 +49,16 @@ public abstract class Creature<T extends Entity> extends Entity implements Dynam
         toHungry();
     }
     // think about method parameter type (smthing like interface)
-    protected Creature(Coordinates entityCoords, WorldMap mapInstance, Class<T> food) {
+    protected Creature(Coordinates entityCoords, WorldMap mapInstance, Class<T> food,
+                       int moveSpeed, int maxHealthPoints, int maxHungry) {
         super(entityCoords);
         this.mapInstance = mapInstance;
         this.food = food;
+        this.maxHealthPoints = maxHealthPoints;
+        this.maxHungry = maxHungry;
+        this.currentHungry = maxHungry;
+        this.currentHealthPoints = maxHealthPoints;
+        this.moveSpeed = moveSpeed;
     }
 
     protected void doRandomMove() {
@@ -62,26 +71,29 @@ public abstract class Creature<T extends Entity> extends Entity implements Dynam
 
     }
 
-    protected void setHungerValue(int value) {
-        if (hunger + value <= 0) {
-            setHealthPoints(-5);
-        } else if (hunger + value >= 200) {
-            hunger = 200;
+    protected void setHungryValue(int value) {
+        if (currentHungry + value <= 0) {
+            currentHungry = 0;
+            setCurrentHealthPoints(-5);
+        } else if (currentHungry + value >= maxHungry) {
+            currentHungry = maxHungry;
         } else {
-            hunger += value;
+            currentHungry += value;
         }
-        if (hunger >= 100 && healthPoints < 100) {
+        if (currentHungry >= maxHungry && currentHealthPoints < maxHealthPoints) {
             toHeal();
         }
     }
 
-    public void setHealthPoints(int value) {
-        if (healthPoints + value <= 0) {
+    public void setCurrentHealthPoints(int value) {
+        if (currentHealthPoints + value <= 0) {
+            currentHealthPoints = 0;
             isAlive = false;
-        } else if (healthPoints + value >= 100) {
-            healthPoints = 100;
+            mapInstance.deleteFromMap(this);
+        } else if (currentHealthPoints + value >= maxHealthPoints) {
+            currentHealthPoints = maxHealthPoints;
         } else {
-            healthPoints += value;
+            currentHealthPoints += value;
         }
     }
 
@@ -90,11 +102,11 @@ public abstract class Creature<T extends Entity> extends Entity implements Dynam
     }
 
     private void toHeal() {
-        setHealthPoints(5);
+        setCurrentHealthPoints(5);
     }
 
     private void toHungry() {
-        setHungerValue(-10);
+        setHungryValue(-10);
     }
 
 
