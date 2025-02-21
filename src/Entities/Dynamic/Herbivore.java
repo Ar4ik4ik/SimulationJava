@@ -3,7 +3,7 @@ package Entities.Dynamic;
 import Entities.EntitiesRepresentation;
 import Entities.Static.Grass;
 import Entities.WorldMap;
-import Utils.Coordinates;
+import Entities.Coordinates;
 
 public class Herbivore extends Creature<Grass> {
 

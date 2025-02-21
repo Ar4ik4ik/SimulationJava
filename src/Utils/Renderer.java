@@ -1,5 +1,6 @@
 package Utils;
 
+import Entities.Coordinates;
 import Entities.Entity;
 import Entities.WorldMap;
 
@@ -17,6 +18,8 @@ public class Renderer {
     public void renderMap() {
 
         List<String> rows = new ArrayList<>();
+        rows.add("=".repeat(mapInstance.WIDTH));
+
 
         for (int i = 0; i < mapInstance.HEIGHT; i++) {
             StringBuilder row = new StringBuilder();
@@ -30,6 +33,7 @@ public class Renderer {
             }
             rows.add(row.toString());
         }
+        rows.add("=".repeat(mapInstance.WIDTH));
 
         for (String row: rows) {
             System.out.println(row);

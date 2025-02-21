@@ -1,5 +1,6 @@
 package Utils;
 
+import Entities.Coordinates;
 import Entities.Entity;
 import Entities.WorldMap;
 

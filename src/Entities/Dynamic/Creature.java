@@ -3,7 +3,7 @@ package Entities.Dynamic;
 import Entities.DynamicalHealth;
 import Entities.Entity;
 import Entities.WorldMap;
-import Utils.Coordinates;
+import Entities.Coordinates;
 import Utils.PathFinder;
 
 import java.util.ArrayList;
@@ -37,11 +37,11 @@ public abstract class Creature<T extends Entity> extends Entity implements Dynam
                 if (!path.isEmpty()) {
                     if (path.size() == 1) {
                         this.interactWithFood(foodObj);
-                        return;
                     } else {
                         int nextStepIndex = Math.min(moveSpeed - 1, path.size() - 1);
                         mapInstance.moveEntity(this, path.get(nextStepIndex));
                     }
+                    return;
                 }
             }
         }

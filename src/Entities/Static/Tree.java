@@ -2,7 +2,7 @@ package Entities.Static;
 
 import Entities.EntitiesRepresentation;
 import Entities.Entity;
-import Utils.Coordinates;
+import Entities.Coordinates;
 
 public class Tree extends Entity {
 

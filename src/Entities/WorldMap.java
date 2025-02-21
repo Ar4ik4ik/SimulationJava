@@ -1,7 +1,6 @@
 package Entities;
 
 import Entities.Static.Grass;
-import Utils.Coordinates;
 import Utils.PathFinder;
 
 import java.util.HashMap;
@@ -28,10 +27,12 @@ public class WorldMap {
         if (isWithinBorders(newEntityCoords)) entity.setEntityCoords(newEntityCoords);
     }
 
-    public void placeOnMap(Entity entity) {
+    public boolean placeOnMap(Entity entity) {
         if (isEmpty(entity.getEntityCoords())) {
             worldMap.put(entity.getEntityCoords(), entity);
+            return true;
         }
+        return false;
     }
 
     public void deleteFromMap(Entity entity) {

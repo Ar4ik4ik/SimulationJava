@@ -3,7 +3,7 @@ package Entities.Static;
 import Entities.DynamicalHealth;
 import Entities.EntitiesRepresentation;
 import Entities.Entity;
-import Utils.Coordinates;
+import Entities.Coordinates;
 
 public class Grass extends Entity implements DynamicalHealth {
     int maxHealthPoints;

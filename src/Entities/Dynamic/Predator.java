@@ -2,7 +2,7 @@ package Entities.Dynamic;
 
 import Entities.EntitiesRepresentation;
 import Entities.WorldMap;
-import Utils.Coordinates;
+import Entities.Coordinates;
 
 public class Predator extends Creature<Herbivore> {
 
