@@ -39,12 +39,12 @@ public class WorldMap {
         worldMap.remove(entity.getEntityCoords());
     }
 
-    public boolean moveEntity(Entity entity, Coordinates newEntityCoords) {
-        if (isWithinBorders(newEntityCoords) && isEmpty(newEntityCoords)) {
-            replaceCoords(entity, newEntityCoords);
-            return true;
-        }
-        return false;
+    public void moveEntity(Entity entity, Coordinates newEntityCoords) {
+        Coordinates oldEntityCoords = entity.getEntityCoords();
+         if (replaceCoords(entity, newEntityCoords)) {
+             worldMap.remove(oldEntityCoords);
+             placeOnMap(entity);
+         }
     }
 
     public boolean isEmpty(Coordinates coords) {
