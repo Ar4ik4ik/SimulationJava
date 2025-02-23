@@ -1,8 +1,8 @@
-package Entities.Static;
+package Game.Entities.Static;
 
-import Entities.EntitiesRepresentation;
-import Entities.Entity;
-import Entities.Coordinates;
+import Game.Entities.EntitiesRepresentation;
+import Game.Entities.Entity;
+import Game.Entities.Coordinates;
 
 public class Tree extends Entity {
 

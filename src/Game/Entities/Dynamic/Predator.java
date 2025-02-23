@@ -1,8 +1,8 @@
-package Entities.Dynamic;
+package Game.Entities.Dynamic;
 
-import Entities.EntitiesRepresentation;
-import Entities.WorldMap;
-import Entities.Coordinates;
+import Game.Entities.EntitiesRepresentation;
+import Game.Entities.WorldMap;
+import Game.Entities.Coordinates;
 
 public class Predator extends Creature<Herbivore> {
 
@@ -20,6 +20,7 @@ public class Predator extends Creature<Herbivore> {
 
     @Override
     protected void interactWithFood(Herbivore prey) {
+        System.out.println(this + "Interact with: " + prey);
         prey.setCurrentHealthPoints(-25);
         if (!prey.isAlive()) {
             this.setHungryValue(100);

@@ -1,8 +1,8 @@
-package Utils;
+package Game.Utils;
 
-import Entities.Coordinates;
-import Entities.Entity;
-import Entities.WorldMap;
+import Game.Entities.Coordinates;
+import Game.Entities.Entity;
+import Game.Entities.WorldMap;
 
 import java.util.*;
 
@@ -117,6 +117,7 @@ public class PathFinder {
             node = node.parent;
         }
         Collections.reverse(Path);
+        Path.removeLast(); Path.removeFirst();
         return Path;
     }
 }

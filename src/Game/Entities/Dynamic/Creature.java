@@ -1,16 +1,16 @@
-package Entities.Dynamic;
+package Game.Entities.Dynamic;
 
-import Entities.DynamicalHealth;
-import Entities.Entity;
-import Entities.WorldMap;
-import Entities.Coordinates;
-import Utils.PathFinder;
+import Game.Entities.DynamicalHealth;
+import Game.Entities.Entity;
+import Game.Entities.WorldMap;
+import Game.Entities.Coordinates;
+import Game.Utils.PathFinder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static Utils.PathFinder.getNeighbors;
+import static Game.Utils.PathFinder.getNeighbors;
 
 public abstract class Creature<T extends Entity> extends Entity implements DynamicalHealth {
 
@@ -34,15 +34,13 @@ public abstract class Creature<T extends Entity> extends Entity implements Dynam
             if (foodObj != null) {
                 // create path
                 List<Coordinates> path = PathFinder.createPath(this.getEntityCoords(), foodObj.getEntityCoords(), mapInstance);
-                if (!path.isEmpty()) {
-                    if (path.size() == 1) {
-                        this.interactWithFood(foodObj);
-                    } else {
-                        int nextStepIndex = Math.min(moveSpeed - 1, path.size() - 1);
-                        mapInstance.moveEntity(this, path.get(nextStepIndex));
-                    }
-                    return;
+                if (path.isEmpty()) {
+                    this.interactWithFood(foodObj);
+                } else {
+                    int nextStepIndex = Math.min(moveSpeed - 1, path.size() - 1);
+                    mapInstance.moveEntity(this, path.get(nextStepIndex));
                 }
+                return;
             }
         }
         doRandomMove();

@@ -1,9 +1,9 @@
-package Entities.Dynamic;
+package Game.Entities.Dynamic;
 
-import Entities.EntitiesRepresentation;
-import Entities.Static.Grass;
-import Entities.WorldMap;
-import Entities.Coordinates;
+import Game.Entities.EntitiesRepresentation;
+import Game.Entities.Static.Grass;
+import Game.Entities.WorldMap;
+import Game.Entities.Coordinates;
 
 public class Herbivore extends Creature<Grass> {
 
@@ -18,6 +18,7 @@ public class Herbivore extends Creature<Grass> {
 
     @Override
     protected void interactWithFood(Grass prey) {
+        System.out.println(this + "Interact with: " + prey);
         prey.setCurrentHealthPoints(-1);
         this.setHungryValue(25);
         if (!prey.isAlive()) mapInstance.deleteFromMap(prey);

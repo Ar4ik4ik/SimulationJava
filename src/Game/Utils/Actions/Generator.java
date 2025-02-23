@@ -1,13 +1,13 @@
-package Utils.Actions;
+package Game.Utils.Actions;
 
-import Entities.Coordinates;
-import Entities.Dynamic.Herbivore;
-import Entities.Dynamic.Predator;
-import Entities.Entity;
-import Entities.Static.Grass;
-import Entities.Static.Rock;
-import Entities.Static.Tree;
-import Entities.WorldMap;
+import Game.Entities.Coordinates;
+import Game.Entities.Dynamic.Herbivore;
+import Game.Entities.Dynamic.Predator;
+import Game.Entities.Entity;
+import Game.Entities.Static.Grass;
+import Game.Entities.Static.Rock;
+import Game.Entities.Static.Tree;
+import Game.Entities.WorldMap;
 
 import java.io.IOException;
 
@@ -18,19 +18,20 @@ public abstract class Generator<T extends Entity> {
 
     {
         try {
-            config = ConfigLoader.loadConfig("config.json");
+            config = ConfigLoader.loadConfig("src/Game/config.json");
         } catch (IOException e) {
             System.out.println("Конфиг не загружен");
             throw new RuntimeException(e);
         }
     }
 
-    protected Config.EntitiesSettings getEntitySettings(Class<T> entityClass) {
-        if (entityClass.isInstance(Herbivore.class)) return config.entitiesSettings.herbivore;
-        if (entityClass.isInstance(Predator.class)) return config.entitiesSettings.predator;
-        if (entityClass.isInstance(Grass.class)) return config.entitiesSettings.grass;
+    protected Object getEntitySettings(Class<T> entityClass) {
+        if (entityClass == Herbivore.class) return config.entitiesSettings.herbivore;
+        if (entityClass == Predator.class) return config.entitiesSettings.predator;
+        if (entityClass == Grass.class) return config.entitiesSettings.grass;
         throw new IllegalArgumentException("Настройки не найдены для: " + entityClass.getSimpleName());
     }
+
 
     protected Generator(WorldMap mapInstance) {
         this.mapInstance = mapInstance;
@@ -48,7 +49,7 @@ class HerbivoreGenerator extends Generator<Herbivore> {
 
     @Override
     public Herbivore generateEntity(Coordinates coordinates) {
-        Config.EntitiesSettings.Herbivore settings = (Config.EntitiesSettings.Herbivore) getEntitySettings(Herbivore.class);
+        Config.EntitiesSettings.HerbivoreSettings settings = (Config.EntitiesSettings.HerbivoreSettings) getEntitySettings(Herbivore.class);
         return new Herbivore(coordinates, mapInstance,
                 settings.moveSpeed,
                 settings.maxHealthPoints,
@@ -63,7 +64,7 @@ class PredatorGenerator extends Generator<Predator> {
 
     @Override
     public Predator generateEntity(Coordinates coordinates) {
-        Config.EntitiesSettings.Predator settings = (Config.EntitiesSettings.Predator) getEntitySettings(Predator.class);
+        Config.EntitiesSettings.PredatorSettings settings = (Config.EntitiesSettings.PredatorSettings) getEntitySettings(Predator.class);
         return new Predator(coordinates, mapInstance,
                 settings.moveSpeed,
                 settings.maxHealthPoints,
@@ -78,7 +79,7 @@ class GrassGenerator extends Generator<Grass> {
 
     @Override
     public Grass generateEntity(Coordinates coordinates) {
-        Config.EntitiesSettings.Grass settings = (Config.EntitiesSettings.Grass) getEntitySettings(Grass.class);
+        Config.EntitiesSettings.GrassSettings settings = (Config.EntitiesSettings.GrassSettings) getEntitySettings(Grass.class);
         return new Grass(coordinates, settings.maxHealthPoints);
     }
 }

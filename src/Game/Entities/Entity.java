@@ -1,4 +1,4 @@
-package Entities;
+package Game.Entities;
 
 
 public abstract class Entity {

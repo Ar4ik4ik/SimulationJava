@@ -1,7 +1,7 @@
-package Entities;
+package Game.Entities;
 
-import Entities.Static.Grass;
-import Utils.PathFinder;
+import Game.Entities.Static.Grass;
+import Game.Utils.PathFinder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,8 +23,12 @@ public class WorldMap {
         return coords.x() <= WIDTH && coords.y() <= HEIGHT;
     }
 
-    private void replaceCoords(Entity entity, Coordinates newEntityCoords) {
-        if (isWithinBorders(newEntityCoords)) entity.setEntityCoords(newEntityCoords);
+    private boolean replaceCoords(Entity entity, Coordinates newEntityCoords) {
+        if (isWithinBorders(newEntityCoords) && isEmpty(newEntityCoords)) {
+            entity.setEntityCoords(newEntityCoords);
+            return true;
+        }
+        return false;
     }
 
     public boolean placeOnMap(Entity entity) {

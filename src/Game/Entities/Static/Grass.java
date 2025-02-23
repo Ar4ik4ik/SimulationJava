@@ -1,9 +1,9 @@
-package Entities.Static;
+package Game.Entities.Static;
 
-import Entities.DynamicalHealth;
-import Entities.EntitiesRepresentation;
-import Entities.Entity;
-import Entities.Coordinates;
+import Game.Entities.DynamicalHealth;
+import Game.Entities.EntitiesRepresentation;
+import Game.Entities.Entity;
+import Game.Entities.Coordinates;
 
 public class Grass extends Entity implements DynamicalHealth {
     int maxHealthPoints;

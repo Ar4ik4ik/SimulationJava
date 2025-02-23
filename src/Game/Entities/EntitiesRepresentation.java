@@ -1,4 +1,4 @@
-package Entities;
+package Game.Entities;
 
 public enum EntitiesRepresentation {
     TREE("\uD83D\uDFEB"),     // 🟫

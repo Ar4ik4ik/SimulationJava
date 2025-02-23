@@ -1,11 +1,11 @@
-package Utils.Actions;
+package Game.Utils.Actions;
 
-import Entities.Dynamic.Herbivore;
-import Entities.Dynamic.Predator;
-import Entities.Entity;
-import Entities.Static.Grass;
-import Entities.Static.Rock;
-import Entities.Static.Tree;
+import Game.Entities.Dynamic.Herbivore;
+import Game.Entities.Dynamic.Predator;
+import Game.Entities.Entity;
+import Game.Entities.Static.Grass;
+import Game.Entities.Static.Rock;
+import Game.Entities.Static.Tree;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
