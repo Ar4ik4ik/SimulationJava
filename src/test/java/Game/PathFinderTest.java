@@ -4,7 +4,7 @@ package Game;
 import Game.Entities.Coordinates;
 import Game.Entities.Static.Rock;
 import Game.Entities.WorldMap;
-import Game.Utils.PathFinder;
+import Game.Utils.PathFinderService;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
@@ -23,7 +23,7 @@ class PathFinderTest {
         map.placeOnMap(new Rock(new Coordinates(4, 4)));
 
         // Выполняем поиск пути
-        List<Coordinates> path = PathFinder.createPath(start, target, map);
+        List<Coordinates> path = PathFinderService.createPath(start, target, map);
 
         // Проверяем, что путь не пустой и ведет к цели
         assertFalse(path.isEmpty(), "Путь не должен быть пустым");
@@ -46,7 +46,7 @@ class PathFinderTest {
         map.placeOnMap(new Rock(new Coordinates(4, 3)));
         map.placeOnMap(new Rock(new Coordinates(4, 2)));
 
-        List<Coordinates> path = PathFinder.createPath(start, target, map);
+        List<Coordinates> path = PathFinderService.createPath(start, target, map);
 
         assertTrue(path.isEmpty(), "Путь должен быть пустым, если нет возможного маршрута");
     }

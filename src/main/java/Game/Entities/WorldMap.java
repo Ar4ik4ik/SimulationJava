@@ -3,7 +3,7 @@ package Game.Entities;
 import Game.Entities.Static.Grass;
 import Game.Utils.Actions.Config;
 import Game.Utils.Actions.ConfigLoader;
-import Game.Utils.PathFinder;
+import Game.Utils.PathFinderService;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -79,10 +79,6 @@ public class WorldMap {
 
     public Map<Coordinates, Entity> getWorldMap() {
         return new HashMap<>(worldMap);
-    }
-
-    public <T extends Entity> T findNearestEntity(Coordinates seekerCoordinates, Class<T> target) {
-        return PathFinder.findNearestEntity(seekerCoordinates, target, this);
     }
 
     public boolean isWalkableObj(Coordinates objCoords) {

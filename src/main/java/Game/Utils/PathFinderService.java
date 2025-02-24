@@ -6,7 +6,7 @@ import Game.Entities.WorldMap;
 
 import java.util.*;
 
-public class PathFinder {
+public class PathFinderService {
 
     private static double heuristicDistance(Coordinates start, Coordinates target) {
         return Math.sqrt(Math.pow(start.x() - target.x(), 2) + Math.pow(start.y() - target.y(), 2));
