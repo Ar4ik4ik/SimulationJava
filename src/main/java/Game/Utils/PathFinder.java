@@ -31,7 +31,7 @@ public class PathFinder {
                 return target.cast(entity);
             }
 
-            for (Map.Entry<Coordinates, Integer> entry: getNeighbors(polledNode.position, mapInstance).entrySet()) {
+            for (Map.Entry<Coordinates, Integer> entry: getNeighbors(polledNode.position, mapInstance, true, null).entrySet()) {
                 Coordinates neighbor = entry.getKey();
                 int moveCost = entry.getValue();
 
@@ -54,7 +54,7 @@ public class PathFinder {
             if (polledNode.position.equals(targetPosition)) return reconstructPath(polledNode);
             closedSet.add(polledNode.position);
 
-            for (Map.Entry<Coordinates, Integer> entry: getNeighbors(polledNode.position, mapInstance).entrySet()) {
+            for (Map.Entry<Coordinates, Integer> entry: getNeighbors(polledNode.position, mapInstance, false, targetPosition).entrySet()) {
                 Coordinates neighborPosition = entry.getKey();
                 int moveCost = entry.getValue();
 
@@ -83,9 +83,9 @@ public class PathFinder {
         return new ArrayList<>();
     }
 
-    public static Map<Coordinates, Integer> getNeighbors(Coordinates coords, WorldMap mapInstance) {
-        int x = coords.x();
-        int y = coords.y();
+    public static Map<Coordinates, Integer> getNeighbors(Coordinates cellCoords, WorldMap mapInstance, boolean includeOccupied, Coordinates targetCoords) {
+        int x = cellCoords.x();
+        int y = cellCoords.y();
         int[][] DIRECTIONS = new int[][]{{x - 1, y}, {x, y - 1}, {x + 1, y}, {x, y + 1},
                 {x - 1, y - 1}, {x + 1, y - 1}, {x - 1, y + 1}, {x + 1, y + 1}};
         Map<Coordinates, Integer> validNeighbors = new HashMap<>();
@@ -99,13 +99,14 @@ public class PathFinder {
 
                 if (mapInstance.isEmpty(neighborCellCoords)) {
                     validNeighbors.put(neighborCellCoords, 1);
-                } else if (mapInstance.isWalkableObj(neighborCellCoords)) {
-                    validNeighbors.put(neighborCellCoords, 2);
+                } else if (neighborCellCoords.equals(targetCoords)) {
+                    validNeighbors.put(neighborCellCoords, 1);
+                } else if (includeOccupied) {
+                    validNeighbors.put(neighborCellCoords, 1);
                 }
-
             }
-
         }
+
         return validNeighbors;
     }
 

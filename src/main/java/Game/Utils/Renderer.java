@@ -15,10 +15,15 @@ public class Renderer {
         this.mapInstance = mapInstance;
     }
 
+    public void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
     public void renderMap() {
 
         List<String> rows = new ArrayList<>();
-        rows.add("=".repeat(mapInstance.WIDTH));
+        rows.add("=".repeat(mapInstance.WIDTH).repeat(2));
 
 
         for (int i = 0; i < mapInstance.HEIGHT; i++) {
@@ -33,7 +38,7 @@ public class Renderer {
             }
             rows.add(row.toString());
         }
-        rows.add("=".repeat(mapInstance.WIDTH));
+        rows.add("=".repeat(mapInstance.WIDTH).repeat(2));
 
         for (String row: rows) {
             System.out.println(row);

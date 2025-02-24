@@ -10,33 +10,51 @@ import Game.Utils.Renderer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Simulation {
-    public WorldMap worldMap = new WorldMap(10, 10);
+public class Simulation implements Runnable {
+    public WorldMap worldMap = new WorldMap();
     public Renderer renderer = new Renderer(worldMap);
     public int turnsCount = 0;
     List<? extends Action> initActionsList = new ArrayList<>(List.of(new PlaceEntitiesAction()));
     List<? extends Action> turnActionsList = new ArrayList<>(List.of(new MoveCreaturesAction()));
+    private volatile boolean running = true;
+    private volatile boolean paused = false;
 
     public void nextTurn() {
         for (Action action: turnActionsList) {
             action.execute(worldMap);
         }
+        renderer.clearScreen();
         renderer.renderMap();
-        System.out.println(turnsCount++);
+        System.out.printf("Ход %s%n", turnsCount++);
     }
 
-    public void startSimulation() {
+    public void run() {
         initGame();
 
-        while (!worldMap.collectTargetEntity(Creature.class).isEmpty()) {
-            try {
-                Thread.sleep(2000);
+        while (running && !worldMap.collectTargetEntity(Creature.class).isEmpty()) {
+            if (!paused) {
                 nextTurn();
+            }
+            try {
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                Thread.currentThread().interrupt();
             }
         }
     }
+
+    public void stop() {
+        running = false;
+    }
+
+    public void pause() {
+        paused = true;
+    }
+
+    public void resume() {
+        paused = false;
+    }
+
 
     private void initGame() {
         int a = 0;

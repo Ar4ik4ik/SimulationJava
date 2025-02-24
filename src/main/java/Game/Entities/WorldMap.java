@@ -1,8 +1,11 @@
 package Game.Entities;
 
 import Game.Entities.Static.Grass;
+import Game.Utils.Actions.Config;
+import Game.Utils.Actions.ConfigLoader;
 import Game.Utils.PathFinder;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,9 +16,14 @@ public class WorldMap {
     // think about replace Creature to key value for fast coords replacing
     private final Map<Coordinates, Entity> worldMap = new HashMap<>();
 
-    public WorldMap(int width, int height) {
-        WIDTH = width;
-        HEIGHT = height;
+    public WorldMap() {
+        try {
+            Config config = ConfigLoader.loadConfig("src/main/java/Game/config.json");
+            WIDTH = config.mapSize.mapWidth;
+            HEIGHT = config.mapSize.mapHeight;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public boolean isWithinBorders(Coordinates coords) {

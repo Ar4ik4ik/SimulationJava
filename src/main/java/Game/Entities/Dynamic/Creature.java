@@ -61,7 +61,7 @@ public abstract class Creature<T extends Entity> extends Entity implements Dynam
 
     protected void doRandomMove() {
 
-        List<Coordinates> neighbors = new ArrayList<>(getNeighbors(this.getEntityCoords(), mapInstance).keySet());
+        List<Coordinates> neighbors = new ArrayList<>(getNeighbors(this.getEntityCoords(), mapInstance, false, null).keySet());
         if (!neighbors.isEmpty()) {
             Random random = new Random();
             mapInstance.moveEntity(this, neighbors.get(random.nextInt(neighbors.size())));

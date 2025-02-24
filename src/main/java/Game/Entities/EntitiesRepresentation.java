@@ -1,9 +1,9 @@
 package Game.Entities;
 
 public enum EntitiesRepresentation {
-    TREE("\uD83D\uDFEB"),     // 🟫
-    GRASS("\uD83D\uDFE9"),    // 🟩
-    ROCK("■"),                 // ■
+    TREE("\uD83D\uDFEB"),      // 🟫
+    GRASS("\uD83D\uDFE9"),     // 🟩
+    ROCK("\u2B1B"),                // ⬛
     HERBIVORE("\uD83D\uDC10"), // 🐐
     PREDATOR("\uD83D\uDC3A");  // 🐺
 

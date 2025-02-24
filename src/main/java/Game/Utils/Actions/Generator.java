@@ -18,7 +18,7 @@ public abstract class Generator<T extends Entity> {
 
     {
         try {
-            config = ConfigLoader.loadConfig("src/Game/config.json");
+            config = ConfigLoader.loadConfig("src/main/java/Game/config.json");
         } catch (IOException e) {
             System.out.println("Конфиг не загружен");
             throw new RuntimeException(e);
