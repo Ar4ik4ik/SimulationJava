@@ -18,10 +18,10 @@ public class Herbivore extends Creature<Grass> {
 
     @Override
     protected void interactWithFood(Grass prey) {
-        System.out.println(this + "Interact with: " + prey);
-        prey.setCurrentHealthPoints(-1);
-        this.setHungryValue(25);
-        if (!prey.isAlive()) mapInstance.deleteFromMap(prey);
+        if (!prey.health.isDead()) {
+            prey.health.adjustHealth(-1);
+            this.hungry.adjustHungry(25, this.health);
+        }
     }
 
 }

@@ -1,19 +1,14 @@
 package Game.Entities.Static;
 
-import Game.Entities.DynamicalHealth;
-import Game.Entities.EntitiesRepresentation;
-import Game.Entities.Entity;
-import Game.Entities.Coordinates;
+import Game.Entities.*;
 
-public class Grass extends Entity implements DynamicalHealth {
-    int maxHealthPoints;
-    int currentHealthPoints;
-    boolean isAlive = true;
+public class Grass extends Entity implements LiveNature{
+
+    public Health health;
 
     public Grass(Coordinates entityCoords, int maxHealthPoints) {
         super(entityCoords);
-        this.maxHealthPoints = maxHealthPoints;
-        this.currentHealthPoints = maxHealthPoints;
+        this.health = new Health(maxHealthPoints);
     }
 
     @Override
@@ -22,19 +17,7 @@ public class Grass extends Entity implements DynamicalHealth {
     }
 
     @Override
-    public void setCurrentHealthPoints(int value) {
-        if (currentHealthPoints + value <= 0) {
-            isAlive = false;
-        } else if (currentHealthPoints + value >= maxHealthPoints) {
-            currentHealthPoints = maxHealthPoints;
-        } else {
-            currentHealthPoints += value;
-        }
+    public Health getHealth() {
+        return health;
     }
-
-    @Override
-    public boolean isAlive() {
-        return isAlive;
-    }
-
 }

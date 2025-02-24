@@ -33,26 +33,26 @@ public class WorldMap {
 
     private boolean replaceCoords(Entity entity, Coordinates newEntityCoords) {
         if (isWithinBorders(newEntityCoords) && isEmpty(newEntityCoords)) {
-            entity.setEntityCoords(newEntityCoords);
+            entity.setCoordinates(newEntityCoords);
             return true;
         }
         return false;
     }
 
     public boolean placeOnMap(Entity entity) {
-        if (isEmpty(entity.getEntityCoords())) {
-            worldMap.put(entity.getEntityCoords(), entity);
+        if (isEmpty(entity.getCoordinates())) {
+            worldMap.put(entity.getCoordinates(), entity);
             return true;
         }
         return false;
     }
 
     public void deleteFromMap(Entity entity) {
-        worldMap.remove(entity.getEntityCoords());
+        worldMap.remove(entity.getCoordinates());
     }
 
     public void moveEntity(Entity entity, Coordinates newEntityCoords) {
-        Coordinates oldEntityCoords = entity.getEntityCoords();
+        Coordinates oldEntityCoords = entity.getCoordinates();
          if (replaceCoords(entity, newEntityCoords)) {
              worldMap.remove(oldEntityCoords);
              placeOnMap(entity);

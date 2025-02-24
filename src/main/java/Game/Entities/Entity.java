@@ -1,30 +1,31 @@
 package Game.Entities;
 
 
+import java.util.Objects;
+
 public abstract class Entity {
-    private Coordinates entityCoords;
+    private Coordinates coordinates;
 
     protected Entity(Coordinates initCoords) {
-        this.entityCoords = initCoords;
+        this.coordinates = Objects.requireNonNull(initCoords);;
     }
 
     abstract public String toString();
 
     public int getX() {
-        return entityCoords.x();
+        return coordinates.x();
     }
 
     public int getY() {
-        return entityCoords.y();
+        return coordinates.y();
     }
 
-    protected void setEntityCoords(Coordinates newEntityCoords) {
-        this.entityCoords = newEntityCoords;
+    protected void setCoordinates(Coordinates newEntityCoords) {
+        this.coordinates = newEntityCoords;
     }
 
-    public Coordinates getEntityCoords() {
-        return entityCoords;
+    public Coordinates getCoordinates() {
+        return coordinates;
     }
-
 
 }

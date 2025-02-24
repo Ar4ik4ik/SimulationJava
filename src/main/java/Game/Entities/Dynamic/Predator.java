@@ -14,16 +14,11 @@ public class Predator extends Creature<Herbivore> {
         this.moveSpeed = moveSpeed;
     }
 
-    // private void interactWithFood(Herbivore foodObj)
-
-
-
     @Override
     protected void interactWithFood(Herbivore prey) {
-        System.out.println(this + "Interact with: " + prey);
-        prey.setCurrentHealthPoints(-25);
-        if (!prey.isAlive()) {
-            this.setHungryValue(100);
+        if (!prey.health.isDead()) {
+            prey.health.adjustHealth(-25);
+            this.hungry.adjustHungry(100, this.health);
         }
     }
 
