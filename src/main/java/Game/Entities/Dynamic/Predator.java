@@ -11,11 +11,10 @@ public class Predator extends Creature<Herbivore> {
                     int maxHealthPoints,
                     int maxHungry) {
         super(entityCoords, mapInstance, Herbivore.class, moveSpeed, maxHealthPoints, maxHungry);
-        this.moveSpeed = moveSpeed;
     }
 
     @Override
-    protected void interactWithFood(Herbivore prey) {
+    protected void processFoodInteraction(Herbivore prey) {
         if (!prey.getHealth().isDead()) {
             prey.getHealth().adjustHealth(-25);
             this.getHungry().adjustHungry(100, this.getHealth());

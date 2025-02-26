@@ -26,17 +26,17 @@ public class Renderer {
         rows.add("=".repeat(mapInstance.WIDTH).repeat(2));
 
 
-        for (int i = 0; i < mapInstance.HEIGHT; i++) {
-            StringBuilder row = new StringBuilder();
-            for (int j = 0; j < mapInstance.WIDTH; j++) {
-                Entity entity = mapInstance.getEntityByCoords(new Coordinates(i, j));
+        for (int row = 0; row < mapInstance.HEIGHT; row++) {
+            StringBuilder rowBuilder = new StringBuilder();
+            for (int col = 0; col < mapInstance.WIDTH; col++) {
+                Entity entity = mapInstance.getEntityByCoords(new Coordinates(row, col));
                 if (entity != null) {
-                    row.append(entity);
+                    rowBuilder.append(entity);
                 } else {
-                    row.append("⬜");
+                    rowBuilder.append("⬜");
                 }
             }
-            rows.add(row.toString());
+            rows.add(rowBuilder.toString());
         }
         rows.add("=".repeat(mapInstance.WIDTH).repeat(2));
 

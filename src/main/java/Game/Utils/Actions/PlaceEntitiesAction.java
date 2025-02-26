@@ -13,17 +13,17 @@ import java.util.Map;
 import java.util.Random;
 
 public class PlaceEntitiesAction implements Action{
+    private static final Random RANDOM = new Random();
     @Override
     public void execute(WorldMap worldMap) {
-        int a = 0;
         for (Map.Entry<Class<? extends Entity>, Double> entry:
                 ConfigLoader.getEntitiesBalanceFromConfig("src/main/java/Game/config.json").entrySet()) {
             int calculatedBalance = calcBalance(worldMap.HEIGHT, worldMap.WIDTH, entry.getValue());
             int counter = 0;
             Generator<?> generator = getGenerator(worldMap, entry);
             while (counter != calculatedBalance) {
-                int randX = new Random().nextInt(worldMap.HEIGHT);
-                int randY = new Random().nextInt(worldMap.WIDTH);
+                int randX = RANDOM.nextInt(worldMap.HEIGHT);
+                int randY = RANDOM.nextInt(worldMap.WIDTH);
                 
                 if (worldMap.placeOnMap(generator.generateEntity(new Coordinates(randX, randY)))) counter++;
             }

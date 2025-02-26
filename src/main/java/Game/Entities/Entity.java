@@ -7,20 +7,12 @@ public abstract class Entity {
     private Coordinates coordinates;
 
     protected Entity(Coordinates initCoords) {
-        this.coordinates = Objects.requireNonNull(initCoords);;
+        this.coordinates = Objects.requireNonNull(initCoords);
     }
 
     abstract public String toString();
 
-    public int getX() {
-        return coordinates.x();
-    }
-
-    public int getY() {
-        return coordinates.y();
-    }
-
-    protected void setCoordinates(Coordinates newEntityCoords) {
+    protected void updateCoordinates(Coordinates newEntityCoords) {
         this.coordinates = newEntityCoords;
     }
 

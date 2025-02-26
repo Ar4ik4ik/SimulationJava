@@ -17,7 +17,7 @@ public class Herbivore extends Creature<Grass> {
     }
 
     @Override
-    protected void interactWithFood(Grass prey) {
+    protected void processFoodInteraction(Grass prey) {
         if (!prey.getHealth().isDead()) {
             prey.getHealth().adjustHealth(-1);
             this.getHungry().adjustHungry(25, this.getHealth());

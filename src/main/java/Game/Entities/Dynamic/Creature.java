@@ -2,16 +2,24 @@ package Game.Entities.Dynamic;
 
 import Game.Entities.*;
 import Game.Utils.MovementStrategy;
-import Game.Utils.TargetMoveStrategy;
 
 public abstract class Creature<T extends Entity> extends Entity implements LiveNature{
 
     private final Hungry hungry;
     private final Health health;
 
-    public int moveSpeed;
-    final WorldMap mapInstance;
-    public Class<T> food;
+    private final int moveSpeed;
+    private final WorldMap mapInstance;
+
+    public Class<T> getFood() {
+        return food;
+    }
+
+    public int getMoveSpeed() {
+        return moveSpeed;
+    }
+
+    private final Class<T> food;
     private MovementStrategy movementStrategy;
 
     protected Creature(Coordinates entityCoords, WorldMap mapInstance, Class<T> food,
@@ -28,8 +36,7 @@ public abstract class Creature<T extends Entity> extends Entity implements LiveN
         Coordinates nextStepCoords = movementStrategy.move(this.getCoordinates(), mapInstance);
         T targetEntity = mapInstance.getEntityByCoords(nextStepCoords, food);
         if (targetEntity != null) {
-            int a = 0;
-            interactWithFood(targetEntity);
+            processFoodInteraction(targetEntity);
             return;
         }
         mapInstance.moveEntity(this, nextStepCoords);
@@ -50,6 +57,6 @@ public abstract class Creature<T extends Entity> extends Entity implements LiveN
         this.movementStrategy = movementStrategy;
     }
 
-    protected abstract void interactWithFood(T pray);
+    protected abstract void processFoodInteraction(T prey);
 
 }
