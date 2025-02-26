@@ -16,9 +16,9 @@ public class Predator extends Creature<Herbivore> {
 
     @Override
     protected void interactWithFood(Herbivore prey) {
-        if (!prey.health.isDead()) {
-            prey.health.adjustHealth(-25);
-            this.hungry.adjustHungry(100, this.health);
+        if (!prey.getHealth().isDead()) {
+            prey.getHealth().adjustHealth(-25);
+            this.getHungry().adjustHungry(100, this.getHealth());
         }
     }
 

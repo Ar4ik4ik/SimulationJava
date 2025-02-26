@@ -2,10 +2,7 @@ package Game;
 
 import Game.Entities.Dynamic.Creature;
 import Game.Entities.WorldMap;
-import Game.Utils.Actions.Action;
-import Game.Utils.Actions.CheckAliveEntityAction;
-import Game.Utils.Actions.MoveCreaturesAction;
-import Game.Utils.Actions.PlaceEntitiesAction;
+import Game.Utils.Actions.*;
 import Game.Utils.Renderer;
 
 import java.util.ArrayList;
@@ -15,8 +12,8 @@ public class Simulation implements Runnable {
     public WorldMap worldMap = new WorldMap();
     public Renderer renderer = new Renderer(worldMap);
     public int turnsCount = 0;
-    List<? extends Action> initActionsList = new ArrayList<>(List.of(new PlaceEntitiesAction()));
-    List<? extends Action> turnActionsList = new ArrayList<>(List.of(new MoveCreaturesAction(), new CheckAliveEntityAction()));
+    List<? extends Action> initActionsList = new ArrayList<>(List.of(new PlaceEntitiesAction(), new MoveStategyChooseAction()));
+    List<? extends Action> turnActionsList = new ArrayList<>(List.of(new MoveCreaturesAction(), new CheckAliveEntityAction(), new MoveStategyChooseAction()));
     private volatile boolean running = true;
     private volatile boolean paused = false;
 
@@ -37,7 +34,7 @@ public class Simulation implements Runnable {
                 nextTurn();
             }
             try {
-                Thread.sleep(100);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -58,7 +55,6 @@ public class Simulation implements Runnable {
 
 
     private void initGame() {
-        int a = 0;
         for (Action action: initActionsList) {
             action.execute(worldMap);
         }

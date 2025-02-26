@@ -1,22 +1,18 @@
 package Game.Entities.Dynamic;
 
 import Game.Entities.*;
-import Game.Utils.PathFinderService;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import static Game.Utils.PathFinderService.getNeighbors;
+import Game.Utils.MovementStrategy;
+import Game.Utils.TargetMoveStrategy;
 
 public abstract class Creature<T extends Entity> extends Entity implements LiveNature{
 
-    Hungry hungry;
-    Health health;
+    private final Hungry hungry;
+    private final Health health;
 
-    int moveSpeed;
+    public int moveSpeed;
     final WorldMap mapInstance;
-    Class<T> food;
+    public Class<T> food;
+    private MovementStrategy movementStrategy;
 
     protected Creature(Coordinates entityCoords, WorldMap mapInstance, Class<T> food,
                        int moveSpeed, int maxHealthPoints, int maxHungry) {
@@ -29,38 +25,29 @@ public abstract class Creature<T extends Entity> extends Entity implements LiveN
     }
 
     public void makeMove() {
-        if (hungry.getHungry() <= hungry.getHungry() / 2) {
-            Coordinates nextStepCoords = null;
-            T foodObj = searchFood();
-            if (foodObj != null) {
-
-                List<Coordinates> path = PathFinderService.createPath(this.getCoordinates(), foodObj.getCoordinates(), mapInstance);
-                if (path.isEmpty()) {
-                    this.interactWithFood(foodObj);
-                } else {
-                    int nextStepIndex = Math.min(moveSpeed - 1, path.size() - 1);
-                    mapInstance.moveEntity(this, path.get(nextStepIndex));
-                }
-                return;
-            }
+        Coordinates nextStepCoords = movementStrategy.move(this.getCoordinates(), mapInstance);
+        T targetEntity = mapInstance.getEntityByCoords(nextStepCoords, food);
+        if (targetEntity != null) {
+            int a = 0;
+            interactWithFood(targetEntity);
+            return;
         }
-        doRandomMove();
+        mapInstance.moveEntity(this, nextStepCoords);
+
         hungry.starve(health);
-    }
-
-    protected void doRandomMove() {
-
-        List<Coordinates> neighbors = new ArrayList<>(getNeighbors(this.getCoordinates(), mapInstance, false, null).keySet());
-        if (!neighbors.isEmpty()) {
-            Random random = new Random();
-            mapInstance.moveEntity(this, neighbors.get(random.nextInt(neighbors.size())));
-        }
-
     }
 
     @Override
     public Health getHealth() {
         return health;
+    }
+
+    public Hungry getHungry() {
+        return hungry;
+    }
+
+    public void setMovementStrategy(MovementStrategy movementStrategy) {
+        this.movementStrategy = movementStrategy;
     }
 
     protected abstract void interactWithFood(T pray);

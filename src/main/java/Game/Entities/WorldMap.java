@@ -77,6 +77,15 @@ public class WorldMap {
         return worldMap.get(coords);
     }
 
+    public <T extends Entity> T getEntityByCoords(Coordinates coords, Class<T> type) {
+        Entity entity = worldMap.get(coords);
+        if (type.isInstance(entity)) {
+            return type.cast(entity);
+        }
+        return null;
+    }
+
+
     public Map<Coordinates, Entity> getWorldMap() {
         return new HashMap<>(worldMap);
     }

@@ -118,7 +118,7 @@ public class PathFinderService {
             node = node.parent;
         }
         Collections.reverse(Path);
-        Path.removeLast(); Path.removeFirst();
+        Path.removeFirst();
         return Path;
     }
 }

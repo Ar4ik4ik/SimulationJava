@@ -31,4 +31,8 @@ public class Hungry {
         adjustHungry(-5, health);
     }
 
+    public boolean isHungry() {
+        return hungry <= maxHungry / 2;
+    }
+
 }
