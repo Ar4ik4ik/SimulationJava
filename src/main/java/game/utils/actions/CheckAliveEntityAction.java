@@ -12,7 +12,7 @@ public class CheckAliveEntityAction implements Action{
     public void execute(WorldMap worldMap) {
         for (Map.Entry<Coordinates, Entity> entry: worldMap.toMap().entrySet()) {
             if (entry.getValue() instanceof LiveNature && ((LiveNature) entry.getValue()).getHealth().isDead()) {
-                worldMap.delete(entry.getValue());
+                worldMap.delete(entry.getKey());
             }
         }
     }

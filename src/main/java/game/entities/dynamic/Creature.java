@@ -3,17 +3,19 @@ package game.entities.dynamic;
 import game.entities.*;
 import game.utils.MovementStrategy;
 
-public abstract class Creature<T extends Entity> extends Entity implements LiveNature{
+import java.util.Objects;
+
+public abstract class Creature<T extends Entity> extends Entity implements LiveNature, Movable{
 
     private final Hungry hungry;
     private final Health health;
-
     private final int moveSpeed;
+
+    private Coordinates coordinates;
     private final WorldMap worldMap;
-
     private final Class<T> food;
-    private MovementStrategy movementStrategy;
 
+    private MovementStrategy movementStrategy;
     public Class<T> getFood() {
         return food;
     }
@@ -22,9 +24,9 @@ public abstract class Creature<T extends Entity> extends Entity implements LiveN
         return moveSpeed;
     }
 
-    protected Creature(Coordinates entityCoords, WorldMap worldMap, Class<T> food,
+    protected Creature(Coordinates initCoords, WorldMap worldMap, Class<T> food,
                        int moveSpeed, int maxHealthPoints, int maxHungry) {
-        super(entityCoords);
+        this.coordinates = Objects.requireNonNull(initCoords);
         this.worldMap = worldMap;
         this.food = food;
         this.health = new Health(maxHealthPoints);
@@ -45,9 +47,9 @@ public abstract class Creature<T extends Entity> extends Entity implements LiveN
 
     protected void makeStep(Coordinates newCoordinates) {
         if (worldMap.isCoordsValid(newCoordinates)) {
-            worldMap.delete(this);
+            worldMap.delete(this.getCoordinates());
             this.updateCoordinates(newCoordinates);
-            worldMap.place(this);
+            worldMap.place(this, this.getCoordinates());
         }
     }
 
@@ -65,5 +67,13 @@ public abstract class Creature<T extends Entity> extends Entity implements LiveN
     }
 
     protected abstract void processFoodInteraction(T prey);
+
+    public void updateCoordinates(Coordinates newEntityCoords) {
+        this.coordinates = newEntityCoords;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
 
 }

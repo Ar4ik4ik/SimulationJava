@@ -96,7 +96,7 @@ public class PathFinderService {
             int nx = x + direction[0];
             int ny = y + direction[1];
 
-            if (nx >= 0 && ny >= 0 && worldMap.isWithinBorders(new Coordinates(nx, ny))) {
+            if (worldMap.isWithinBorders(new Coordinates(nx, ny))) {
                 Coordinates neighborCellCoords = new Coordinates(nx, ny);
 
                 if (worldMap.isEmpty(neighborCellCoords)) {

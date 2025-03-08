@@ -1,6 +1,5 @@
 package game.entities.dynamic;
 
-import game.entities.EntitiesRepresentation;
 import game.entities.statics.Grass;
 import game.entities.WorldMap;
 import game.entities.Coordinates;
@@ -12,11 +11,6 @@ public class Herbivore extends Creature<Grass> {
 
     public Herbivore(Coordinates entityCoords, WorldMap worldMap, int moveSpeed, int maxHealthPoints, int maxHungry) {
         super(entityCoords, worldMap, Grass.class, moveSpeed , maxHealthPoints, maxHungry);
-    }
-
-    @Override
-    public String toString() {
-        return EntitiesRepresentation.HERBIVORE.getEntityRepresentation();
     }
 
     @Override

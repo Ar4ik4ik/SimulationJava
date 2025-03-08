@@ -4,7 +4,7 @@
 		"mapWidth": 10
 	},
 	"balance": {
-		"herbivore": 0.1,
+		"herbivore": 0.05,
 		"predator": 0.05,
 		"tree": 0.05,
 		"rock": 0.05,
@@ -13,16 +13,16 @@
 	"entitiesSettings": {
 		"herbivore": {
 			"maxHealthPoints": 100,
-			"maxHungry": 80,
+			"maxHungry": 120,
 			"moveSpeed": 2
 		},
 		"predator": {
 			"maxHealthPoints": 120,
-			"maxHungry": 100,
+			"maxHungry": 160,
 			"moveSpeed": 3
 		},
 		"grass": {
-			"maxHealthPoints": 10
+			"maxHealthPoints": 4
 		}
 	}
 }

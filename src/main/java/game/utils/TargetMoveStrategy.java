@@ -7,8 +7,8 @@ import game.entities.WorldMap;
 import java.util.List;
 
 public class TargetMoveStrategy<T extends Entity> implements MovementStrategy {
-    Class<T> target;
-    int moveSpeed;
+    private final Class<T> target;
+    private final int moveSpeed;
 
     public TargetMoveStrategy(Class<T> target, int moveSpeed) {
         this.target = target;
@@ -19,7 +19,7 @@ public class TargetMoveStrategy<T extends Entity> implements MovementStrategy {
     public Coordinates move(Coordinates startCoordinates, WorldMap worldMap) {
         T nearestEntity = PathFinderService.findNearestEntity(startCoordinates, target, worldMap);
         if (nearestEntity != null) {
-            List<Coordinates> path = PathFinderService.createPath(startCoordinates, nearestEntity.getCoordinates(), worldMap);
+            List<Coordinates> path = PathFinderService.createPath(startCoordinates, worldMap.getCoordsByEntity(nearestEntity), worldMap);
             if (path.isEmpty()) {
                 // fallback if entity is blocked
                 return new RandomMoveStrategy().move(startCoordinates, worldMap);

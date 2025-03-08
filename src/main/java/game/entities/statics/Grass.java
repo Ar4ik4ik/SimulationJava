@@ -6,14 +6,8 @@ public class Grass extends Entity implements LiveNature{
 
     public Health health;
 
-    public Grass(Coordinates entityCoords, int maxHealthPoints) {
-        super(entityCoords);
+    public Grass(int maxHealthPoints) {
         this.health = new Health(maxHealthPoints);
-    }
-
-    @Override
-    public String toString() {
-        return EntitiesRepresentation.GRASS.getEntityRepresentation();
     }
 
     @Override

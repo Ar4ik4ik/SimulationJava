@@ -23,16 +23,16 @@ public class WorldMap {
         return isWithinBorders(coordinates) && isEmpty(coordinates);
     }
 
-    public void place(Entity entity) {
-        if (isEmpty(entity.getCoordinates())) {
-            entitiesByCoords.put(entity.getCoordinates(), entity);
+    public void place(Entity entity, Coordinates coordinates) {
+        if (isEmpty(coordinates)) {
+            entitiesByCoords.put(coordinates, entity);
             return;
         }
-        throw new IllegalArgumentException("Coordinates %s is already occupied".formatted(entity.getCoordinates().toString()));
+        throw new IllegalArgumentException("Coordinates %s is already occupied".formatted(coordinates.toString()));
     }
 
-    public void delete(Entity entity) {
-        entitiesByCoords.remove(entity.getCoordinates());
+    public void delete(Coordinates coordinates) {
+        entitiesByCoords.remove(coordinates);
     }
 
     public boolean isEmpty(Coordinates coords) {
@@ -51,6 +51,15 @@ public class WorldMap {
 
     public boolean isCreaturesOnMap() {
         return !collectTargetEntity(Creature.class).isEmpty();
+    }
+
+    public Coordinates getCoordsByEntity(Entity entity) {
+        for (Map.Entry<Coordinates, Entity> entry: entitiesByCoords.entrySet()) {
+            if (entry.getValue().equals(entity)) {
+                return entry.getKey();
+            }
+        }
+        return new Coordinates(-1, -1);
     }
 
     public Entity getEntityByCoords(Coordinates coords) {

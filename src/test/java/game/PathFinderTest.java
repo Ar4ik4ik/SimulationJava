@@ -19,8 +19,8 @@ class PathFinderTest {
         Coordinates target = new Coordinates(5, 5);
 
         // Добавляем препятствие
-        map.place(new Rock(new Coordinates(3, 3)));
-        map.place(new Rock(new Coordinates(4, 4)));
+        map.place(new Rock(new Coordinates(3, 3)), );
+        map.place(new Rock(new Coordinates(4, 4)), );
 
         // Выполняем поиск пути
         List<Coordinates> path = PathFinderService.createPath(start, target, map);
@@ -37,14 +37,14 @@ class PathFinderTest {
         Coordinates target = new Coordinates(3, 3);
 
         // Полностью блокируем путь
-        map.place(new Rock(new Coordinates(2, 2)));
-        map.place(new Rock(new Coordinates(2, 3)));
-        map.place(new Rock(new Coordinates(2, 4)));
-        map.place(new Rock(new Coordinates(3, 2)));
-        map.place(new Rock(new Coordinates(3, 4)));
-        map.place(new Rock(new Coordinates(4, 4)));
-        map.place(new Rock(new Coordinates(4, 3)));
-        map.place(new Rock(new Coordinates(4, 2)));
+        map.place(new Rock(new Coordinates(2, 2)), );
+        map.place(new Rock(new Coordinates(2, 3)), );
+        map.place(new Rock(new Coordinates(2, 4)), );
+        map.place(new Rock(new Coordinates(3, 2)), );
+        map.place(new Rock(new Coordinates(3, 4)), );
+        map.place(new Rock(new Coordinates(4, 4)), );
+        map.place(new Rock(new Coordinates(4, 3)), );
+        map.place(new Rock(new Coordinates(4, 2)), );
 
         List<Coordinates> path = PathFinderService.createPath(start, target, map);
 

@@ -2,7 +2,7 @@ package game.entities;
 
 public class Health {
     private final int maxHealth;
-    public int health;
+    private int health;
     private final static int HEALTH_REDUCING_RATE = -5;
     private final static int HEALTH_INCREASING_RATE = 10;
 

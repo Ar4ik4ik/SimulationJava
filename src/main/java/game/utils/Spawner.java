@@ -3,6 +3,7 @@ package game.utils;
 import game.entities.Coordinates;
 import game.entities.Entity;
 import game.entities.WorldMap;
+import game.entities.dynamic.Creature;
 
 import java.util.Random;
 import java.util.function.Supplier;
@@ -23,8 +24,11 @@ public class Spawner {
         for (int i = 0; i < amount; i++) {
             Entity entity = entitySupplier.get();
             Coordinates coordinates = getRandomCoordinates(worldMap);
-            entity.updateCoordinates(coordinates);
-            worldMap.place(entity);
+            worldMap.place(entity, coordinates);
+
+            if (entity instanceof Creature<?>) {
+                ((Creature<?>) entity).updateCoordinates(coordinates);
+            }
         }
     }
 

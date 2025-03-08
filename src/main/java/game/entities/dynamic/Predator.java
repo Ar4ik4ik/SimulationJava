@@ -1,6 +1,5 @@
 package game.entities.dynamic;
 
-import game.entities.EntitiesRepresentation;
 import game.entities.WorldMap;
 import game.entities.Coordinates;
 
@@ -25,8 +24,4 @@ public class Predator extends Creature<Herbivore> {
         }
     }
 
-    @Override
-    public String toString() {
-        return EntitiesRepresentation.PREDATOR.getEntityRepresentation();
-    }
 }

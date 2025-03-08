@@ -1,6 +1,5 @@
 package game.utils.actions;
 
-import game.entities.Coordinates;
 import game.entities.WorldMap;
 import game.entities.statics.Grass;
 import game.entities.statics.Rock;
@@ -20,13 +19,11 @@ public class SpawnAction implements Action {
 
     @Override
     public void execute(WorldMap worldMap) {
-        Coordinates defaultCoordinates = new Coordinates(-1, -1);
 
         List<Spawner> spawners = List.of(
-                new Spawner(worldMap, ()-> new Tree(defaultCoordinates), calcBalance(config.balance.tree)),
-                new Spawner(worldMap, ()-> new Rock(defaultCoordinates), calcBalance(config.balance.rock)),
+                new Spawner(worldMap, Tree::new, calcBalance(config.balance.tree)),
+                new Spawner(worldMap, Rock::new, calcBalance(config.balance.rock)),
                 new Spawner(worldMap, ()-> new Grass(
-                        defaultCoordinates,
                         config.entitiesSettings.grass.maxHealthPoints),
                         calcBalance(config.balance.grass)
                         ),
